@@ -1,7 +1,10 @@
+import settingsReducer from "./slices/settings";
 import { configureStore } from "@reduxjs/toolkit";
 
 const store = configureStore({
-  reducer: {},
+  reducer: {
+    settings: settingsReducer,
+  },
   devTools: process.env.NODE_ENV === "development",
   middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false }),
 });

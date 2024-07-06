@@ -1,0 +1,27 @@
+// Theme
+
+@mixin dark-theme() {
+  [data-theme="dark"] {
+    @content;
+  }
+}
+
+@mixin light-theme() {
+  [data-theme="light"] {
+    @content;
+  }
+}
+
+// Breakpoints
+
+@mixin mobile() {
+  @media (max-width: $mobile-breakpoint) {
+    @content;
+  }
+}
+
+@mixin full() {
+  @media (min-width: $mobile-breakpoint) {
+    @content;
+  }
+}

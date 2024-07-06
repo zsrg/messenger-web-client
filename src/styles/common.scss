@@ -1,0 +1,50 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: $bg-primary;
+  font-size: 14px;
+  font-family: monospace;
+  color: $text-secondary;
+}
+
+// Colors
+
+.text-primary {
+  color: $text-primary;
+}
+
+.text-secondary {
+  color: $text-secondary;
+}
+
+.text-danger {
+  color: $text-danger;
+}
+
+.text-success {
+  color: $text-success;
+}
+
+.text-selected {
+  color: $text-selected;
+}
+
+// Background
+
+.bg-primary {
+  color: $bg-primary;
+}
+
+.bg-secondary {
+  color: $bg-secondary;
+}
+
+// Scrollbar
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $scrollbar-thumb-color;
+}
