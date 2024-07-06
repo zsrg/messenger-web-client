@@ -1,0 +1,28 @@
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  width: 100%;
+  height: 100vh;
+}
+
+// Login form
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  width: 350px;
+  margin: 15px;
+
+  > * {
+    box-sizing: border-box;
+    margin: 10px 0;
+  }
+}
+
+@include mobile() {
+  .login-form {
+    width: 100%;
+  }
+}

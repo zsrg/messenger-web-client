@@ -13,4 +13,15 @@ $notification-info:             var(--gray-1);
 $notification-success:          var(--green);
 $notification-error:            var(--red);
 
+$button-backgroud:              var(--gray-3);
+$button-hover-backgroud:        var(--purple);
+
+$icon-button-color:             var(--gray-1);
+$icon-button-hover-color:       var(--gray-0);
+$icon-button-selected-color:    var(--purple);
+
+$input-backgroud:               var(--gray-2);
+$input-hover-border:            var(--gray-1);
+$input-focus-border:            var(--purple);
+
 $mobile-breakpoint:             850px;

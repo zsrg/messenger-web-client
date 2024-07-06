@@ -115,3 +115,89 @@ body {
     width: auto;
   }
 }
+
+// Buton
+
+.button {
+  outline: none;
+  user-select: none;
+  padding: 10px 15px;
+  background: $button-backgroud;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  color: $text-secondary;
+
+  &:hover {
+    background: $button-hover-backgroud;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+  }
+}
+
+// Icon button
+
+.icon-button {
+  outline: none;
+  padding: 5px;
+  background: transparent;
+  cursor: pointer;
+  border: none;
+  font-size: 20px;
+  color: $icon-button-color;
+
+  &:hover {
+    color: $icon-button-hover-color;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+  }
+
+  &.active {
+    color: $icon-button-selected-color;
+  }
+}
+
+// Text input
+
+.text-input {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+
+  &__input {
+    outline: none;
+    width: 100%;
+    padding: 10px 15px;
+    background: $input-backgroud;
+    border: 2px solid $input-backgroud;
+    border-radius: 5px;
+    color: $text-secondary;
+
+    &:hover {
+      border: 2px solid $input-hover-border;
+    }
+
+    &:focus {
+      border: 2px solid $input-focus-border;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+    }
+
+    &:not(:only-child) {
+      padding: 10px 40px 10px 15px;
+    }
+  }
+
+  &__button {
+    position: absolute;
+    right: 10px;
+    font-size: 14px !important;
+  }
+}

@@ -1,12 +1,23 @@
 import notificationsReducer from "./slices/notifications";
 import settingsReducer from "./slices/settings";
-import { configureStore } from "@reduxjs/toolkit";
+import userReducer from "./slices/user";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+
+const combinedReducer = combineReducers({
+  notifications: notificationsReducer,
+  settings: settingsReducer,
+  user: userReducer,
+});
+
+const rootReducer = (state, action) => {
+  if (action.payload?.status === 401) {
+    state = undefined;
+  }
+  return combinedReducer(state, action);
+};
 
 const store = configureStore({
-  reducer: {
-    notifications: notificationsReducer,
-    settings: settingsReducer,
-  },
+  reducer: rootReducer,
   devTools: process.env.NODE_ENV === "development",
   middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false }),
 });

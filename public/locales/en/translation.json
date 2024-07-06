@@ -1,1 +1,13 @@
-{}
+{
+  "loginPage": {
+    "loginForm": {
+      "login": "Login",
+      "password": "Password",
+      "signIn": "Sign In"
+    },
+    "messages": {
+      "invalidLoginOrPassword": "Invalid login or password",
+      "createSessionError": "Create session error"
+    }
+  }
+}
