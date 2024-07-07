@@ -9,5 +9,13 @@
       "invalidLoginOrPassword": "Invalid login or password",
       "createSessionError": "Create session error"
     }
+  },
+  "messengerPage": {
+    "dialogsHeader": {
+      "search": "Search"
+    },
+    "dialogsList": {
+      "file": "File"
+    }
   }
 }

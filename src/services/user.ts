@@ -14,3 +14,8 @@ export const deleteSession = async () =>
     method: RequestMethod.DELETE,
     keepalive: true,
   });
+
+export const getUserData = async () =>
+  await sendRequest({
+    url: "/api/user",
+  });

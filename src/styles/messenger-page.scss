@@ -1,0 +1,69 @@
+.messenger-page {
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+  width: 100%;
+  height: 100vh;
+
+  &__sidebar {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    width: 290px;
+    background: $bg-secondary;
+    border-right: 1px solid $border-color;
+  }
+}
+
+@include mobile() {
+  .messenger-page__sidebar {
+    width: 100%;
+  }
+}
+
+// Dialogs list item
+
+.dialogs-list-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 5px;
+
+  > * {
+    padding: 5px;
+  }
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 211px;
+
+    > * {
+      padding: 5px;
+    }
+
+    > :first-child {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+
+      > :first-child {
+        font-weight: bold;
+        color: $text-primary;
+      }
+    }
+
+    > :last-child {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+}
+
+@include mobile() {
+  .dialogs-list-item__text {
+    max-width: 100%;
+  }
+}

@@ -9,6 +9,8 @@ $text-success:                  var(--green);
 
 $scrollbar-thumb-color:         var(--gray-2);
 
+$border-color:                  var(--gray-4);
+
 $notification-info:             var(--gray-1);
 $notification-success:          var(--green);
 $notification-error:            var(--red);
@@ -23,5 +25,11 @@ $icon-button-selected-color:    var(--purple);
 $input-backgroud:               var(--gray-2);
 $input-hover-border:            var(--gray-1);
 $input-focus-border:            var(--purple);
+
+$list-item-background:          var(--gray-3);
+$list-item-hover-background:    var(--gray-2);
+$list-item-selected-background: var(--purple);
+
+$avatar-background:             var(--gray-4);
 
 $mobile-breakpoint:             850px;

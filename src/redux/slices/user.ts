@@ -1,17 +1,23 @@
 import * as userServices from "../../services/user";
 import { addNotification } from "./notifications";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { CreateSessionData, SessionData } from "../../types/user";
+import { CreateSessionData, SessionData, UserData } from "../../types/user";
 import { NotificationType } from "../../types/notifications";
 import { ResponseError } from "../../services";
 import { t } from "i18next";
 
 export interface UserState {
   sessionId: string;
+  id: number;
+  login: string;
+  name: string;
 }
 
 const initialState: UserState = {
   sessionId: null,
+  id: null,
+  login: null,
+  name: null,
 };
 
 export const createSession = createAsyncThunk<SessionData, CreateSessionData>(
@@ -37,6 +43,14 @@ export const deleteSession = createAsyncThunk<void, void>(
       .catch((error: ResponseError) => rejectWithValue(error))
 );
 
+export const getUserData = createAsyncThunk<UserData, void>(
+  "user/getUserData",
+  async (_, { rejectWithValue }) =>
+    userServices
+      .getUserData()
+      .catch((error: ResponseError) => rejectWithValue(error))
+);
+
 export const userSlice = createSlice({
   name: "user",
   initialState,
@@ -53,6 +67,14 @@ export const userSlice = createSlice({
       deleteSession.fulfilled,
       (state: UserState) => {
         state.sessionId = null;
+      }
+    );
+    builder.addCase(
+      getUserData.fulfilled,
+      (state: UserState, action: PayloadAction<UserData>) => {
+        state.id = action.payload.id;
+        state.login = action.payload.login;
+        state.name = action.payload.name;
       }
     );
   },

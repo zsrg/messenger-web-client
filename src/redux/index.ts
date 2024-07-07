@@ -1,9 +1,18 @@
+import contactsReducer from "./slices/contacts";
+import dialogsReducer from "./slices/dialogs";
+import messagesReducer from "./slices/messages";
 import notificationsReducer from "./slices/notifications";
 import settingsReducer from "./slices/settings";
 import userReducer from "./slices/user";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { enableMapSet } from "immer";
+
+enableMapSet();
 
 const combinedReducer = combineReducers({
+  contacts: contactsReducer,
+  dialogs: dialogsReducer,
+  messages: messagesReducer,
   notifications: notificationsReducer,
   settings: settingsReducer,
   user: userReducer,
