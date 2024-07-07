@@ -1,7 +1,10 @@
 import * as dialogsServices from "../../services/dialogs";
+import { addNotification } from "./notifications";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { DialogData } from "../../types/dialogs";
+import { CreateDialogData, DialogData } from "../../types/dialogs";
+import { NotificationType } from "../../types/notifications";
 import { ResponseError } from "../../services";
+import { t } from "i18next";
 
 export interface DialogsState {
   selectedDialog: number;
@@ -14,6 +17,17 @@ const initialState: DialogsState = {
   dialogs: [],
   filter: null,
 };
+
+export const createDialog = createAsyncThunk<DialogData, CreateDialogData>(
+  "dialogs/createDialog",
+  async (createDialogData: CreateDialogData, { dispatch, rejectWithValue }) =>
+    await dialogsServices
+      .creteDialog(createDialogData)
+      .catch((e: ResponseError) => {
+        dispatch(addNotification({ type: NotificationType.Error, text: t("messengerPage.messages.createDialogError") }));
+        return rejectWithValue(e);
+      })
+);
 
 export const getDialogs = createAsyncThunk<DialogData[], void>(
   "dialogs/getDialogs",
@@ -35,6 +49,13 @@ export const dialogsSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    builder.addCase(
+      createDialog.fulfilled,
+      (state: DialogsState, action: PayloadAction<DialogData>) => {
+        state.dialogs.push(action.payload);
+        state.selectedDialog = action.payload.id;
+      }
+    );
     builder.addCase(
       getDialogs.fulfilled,
       (state: DialogsState, action: PayloadAction<DialogData[]>) => {

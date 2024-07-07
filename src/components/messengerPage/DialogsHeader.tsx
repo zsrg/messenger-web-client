@@ -1,6 +1,12 @@
+import ContactsModal from "./modals/ContactsModal";
+import FloatingButton from "../common/inputs/FloatingButton";
 import Header from "../common/layouts/Header";
+import IconButton from "../common/inputs/IconButton";
 import TextInput from "../common/inputs/TextInput";
+import useToggle from "../../hooks/useToggle";
 import { ChangeEvent, FC } from "react";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { RootState } from "../../redux";
 import { setFilter } from "../../redux/slices/dialogs";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
@@ -9,6 +15,8 @@ import { useTranslation } from "react-i18next";
 const DialogsHeader: FC = () => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
+
+  const [isContactsModalOpen, toggleContactsModal] = useToggle(false);
 
   const filter = useAppSelector((state: RootState) => state.dialogs.filter);
 
@@ -19,11 +27,33 @@ const DialogsHeader: FC = () => {
   return (
     <Header
       leftItems={
-        <TextInput
-          placeholder={t("messengerPage.dialogsHeader.search")}
-          value={filter || ""}
-          onChange={handleChangeFilter}
-        />
+        <>
+          <IconButton
+            className="dont-show-on-mobile"
+            onClick={toggleContactsModal}
+            title={t("messengerPage.dialogsHeader.createDialog")}
+          >
+            <FontAwesomeIcon icon={faPlus} />
+          </IconButton>
+
+          <TextInput
+            placeholder={t("messengerPage.dialogsHeader.search")}
+            value={filter || ""}
+            onChange={handleChangeFilter}
+          />
+
+          <ContactsModal
+            isOpen={isContactsModalOpen}
+            toggle={toggleContactsModal}
+          />
+
+          <FloatingButton
+            className="show-on-mobile"
+            onClick={toggleContactsModal}
+          >
+            <FontAwesomeIcon icon={faPlus} />
+          </FloatingButton>
+        </>
       }
     />
   );

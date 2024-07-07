@@ -12,10 +12,19 @@
   },
   "messengerPage": {
     "dialogsHeader": {
-      "search": "Search"
+      "search": "Search",
+      "createDialog": "Create new dialog"
     },
     "dialogsList": {
       "file": "File"
+    },
+    "modals": {
+      "contactsModal": {
+        "title": "Contacts"
+      }
+    },
+    "messages": {
+      "createDialogError": "Create dialog error"
     }
   }
 }
