@@ -7,6 +7,7 @@ import DialogsList from "../components/messengerPage/dialogsList/DialogsList";
 import If from "../components/common/utils/If";
 import MessagesHeader from "../components/messengerPage/MessagesHeader";
 import MessagesList from "../components/messengerPage/messagesList/MessagesList";
+import NewMessageForm from "../components/messengerPage/NewMessageForm";
 import useToggle from "../hooks/useToggle";
 import { DialogData } from "../types/dialogs";
 import { FC, useEffect } from "react";
@@ -61,6 +62,7 @@ const MessengerPage: FC = () => {
                 toggleDialogInfo={toggleDialogInfo}
               />
               <MessagesList />
+              <NewMessageForm />
             </div>
 
             <If condition={isDialogInfoOpen}>

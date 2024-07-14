@@ -1,3 +1,9 @@
+export interface SendMessageData {
+  dialogId: number;
+  text: string;
+  attachmentId?: number;
+}
+
 export interface MessageData {
   id: number;
   dialogId: number;

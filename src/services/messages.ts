@@ -1,4 +1,12 @@
 import { RequestMethod, sendRequest } from ".";
+import { SendMessageData } from "../types/messages";
+
+export const sendMessage = async (sendMessageData: SendMessageData) =>
+  await sendRequest({
+    url: "/api/messages/message",
+    method: RequestMethod.POST,
+    body: sendMessageData,
+  });
 
 export const getMessages = async (
   dialogId: number,

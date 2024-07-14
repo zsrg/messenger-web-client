@@ -270,6 +270,18 @@ body {
   }
 }
 
+// File input
+
+.file-input {
+  &.disabled {
+    opacity: 0.5;
+  }
+
+  > input[type="file"] {
+    display: none;
+  }
+}
+
 // Floating button
 
 .floating-button {

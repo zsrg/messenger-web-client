@@ -32,12 +32,22 @@
       "dialogInfo": "Dialog info",
       "closeDialog": "Close dialog"
     },
+    "newMessageForm": {
+      "addFile": "Add file",
+      "writeMessage": "Write a message...",
+      "enterDescription": "Enter - for send message\nCtrl + Enter - for new line"
+    },
     "modals": {
       "contactsModal": {
         "title": "Contacts"
       },
       "dialogInfoModal": {
         "title": "Dialog info"
+      },
+      "sendImageModal": {
+        "title": "Send image",
+        "cancel": "Cancel",
+        "send": "Send"
       }
     },
     "messages": {

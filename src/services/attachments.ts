@@ -1,4 +1,12 @@
+import { CreateAttachmentData } from "../types/attachments";
 import { RequestMethod, ResponseFormat, sendRequest } from ".";
+
+export const createAttachment = async (createAttachmentData: CreateAttachmentData) =>
+  await sendRequest({
+    url: "/api/attachments/attachment",
+    method: RequestMethod.POST,
+    body: createAttachmentData,
+  });
 
 export const getAttachment = async (attachmentId: number) =>
   await sendRequest({

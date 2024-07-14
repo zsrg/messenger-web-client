@@ -1,6 +1,6 @@
 import * as messagesServices from "../../services/messages";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { MessageData } from "../../types/messages";
+import { MessageData, SendMessageData } from "../../types/messages";
 import { ResponseError } from "../../services";
 
 export interface MessagesState {
@@ -12,6 +12,14 @@ const initialState: MessagesState = {
   lastMessages: new Map(),
   messages: new Map(),
 };
+
+export const sendMessage = createAsyncThunk<MessageData, SendMessageData>(
+  "messages/sendMessage",
+  async (sendMessageData: SendMessageData, { rejectWithValue }) =>
+    await messagesServices
+      .sendMessage(sendMessageData)
+      .catch((error: ResponseError) => rejectWithValue(error))
+);
 
 export const getLastMessages = createAsyncThunk<Map<number, MessageData>, number[]>(
   "messages/getLastMessages",
@@ -57,8 +65,24 @@ export const deleteDialogMessages = createAsyncThunk<number, number>(
 export const messagesSlice = createSlice({
   name: "messages",
   initialState,
-  reducers: {},
+  reducers: {
+    updateLastMessage: (state: MessagesState, action: PayloadAction<MessageData>) => {
+      const { dialogId } = action.payload;
+      state.lastMessages.set(dialogId, action.payload);
+    },
+  },
   extraReducers: (builder) => {
+    builder.addCase(
+      sendMessage.fulfilled,
+      (state: MessagesState, action: PayloadAction<MessageData>) => {
+        const { dialogId } = action.payload;
+        if (!state.messages.has(dialogId)) {
+          state.messages.set(dialogId, [action.payload]);
+        } else {
+          state.messages.get(dialogId).push(action.payload);
+        }
+      }
+    );
     builder.addCase(
       getLastMessages.fulfilled,
       (state: MessagesState, action: PayloadAction<Map<number, MessageData>>) => {
@@ -80,5 +104,7 @@ export const messagesSlice = createSlice({
     );
   },
 });
+
+export const { updateLastMessage } = messagesSlice.actions;
 
 export default messagesSlice.reducer;
