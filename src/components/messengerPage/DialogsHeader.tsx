@@ -29,7 +29,7 @@ const DialogsHeader: FC = () => {
       leftItems={
         <>
           <IconButton
-            className="dont-show-on-mobile"
+            className="dont-show-on-compact"
             onClick={toggleContactsModal}
             title={t("messengerPage.dialogsHeader.createDialog")}
           >
@@ -48,7 +48,7 @@ const DialogsHeader: FC = () => {
           />
 
           <FloatingButton
-            className="show-on-mobile"
+            className="show-on-compact"
             onClick={toggleContactsModal}
           >
             <FontAwesomeIcon icon={faPlus} />

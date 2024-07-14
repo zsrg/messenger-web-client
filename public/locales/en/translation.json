@@ -11,6 +11,7 @@
     }
   },
   "messengerPage": {
+    "selectDialogMessage": "Select a chat or create a new one to start messaging",
     "dialogsHeader": {
       "search": "Search",
       "createDialog": "Create new dialog"
@@ -18,13 +19,30 @@
     "dialogsList": {
       "file": "File"
     },
+    "dialogInfoHeader": {
+      "title": "Dialog info",
+      "closeDialogInfo": "Close dialog info"
+    },
+    "dialogInfo": {
+      "deleteDialog": "Delete dialog",
+      "confirmDeleteDialog": "Are you sure you want to delete the dialog?",
+      "delete": "Delete"
+    },
+    "messagesHeader": {
+      "dialogInfo": "Dialog info",
+      "closeDialog": "Close dialog"
+    },
     "modals": {
       "contactsModal": {
         "title": "Contacts"
+      },
+      "dialogInfoModal": {
+        "title": "Dialog info"
       }
     },
     "messages": {
-      "createDialogError": "Create dialog error"
+      "createDialogError": "Create dialog error",
+      "deleteDialogError": "Delete dialog error"
     }
   }
 }

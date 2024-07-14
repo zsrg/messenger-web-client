@@ -1,4 +1,4 @@
-import { sendRequest } from ".";
+import { RequestMethod, sendRequest } from ".";
 
 export const getMessages = async (
   dialogId: number,
@@ -8,4 +8,10 @@ export const getMessages = async (
   await sendRequest({
     url: `/api/messages/dialog/${dialogId}`,
     query: { limit, offset },
+  });
+
+export const deleteDialogMessages = async (dialogId: number) =>
+  await sendRequest({
+    url: `/api/messages/dialog/${dialogId}`,
+    method: RequestMethod.DELETE,
   });

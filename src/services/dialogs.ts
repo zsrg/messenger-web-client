@@ -12,3 +12,9 @@ export const getDialogs = async () =>
   await sendRequest({
     url: "/api/dialogs",
   });
+
+export const deleteDialog = async (dialogId: number) =>
+  await sendRequest({
+    url: `/api/dialogs/dialog/${dialogId}`,
+    method: RequestMethod.DELETE,
+  });

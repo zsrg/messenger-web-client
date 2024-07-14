@@ -37,6 +37,18 @@ export const getDialogs = createAsyncThunk<DialogData[], void>(
       .catch((error: ResponseError) => rejectWithValue(error))
 );
 
+export const deleteDialog = createAsyncThunk<number, number>(
+  "dialogs/deleteDialog",
+  async (dialogId: number, { dispatch, fulfillWithValue, rejectWithValue }) =>
+    await dialogsServices
+      .deleteDialog(dialogId)
+      .then(() => fulfillWithValue(dialogId))
+      .catch((error: ResponseError) => {
+        dispatch(addNotification({ type: NotificationType.Error, text: t("messengerPage.messages.deleteDialogError") }));
+        return rejectWithValue(error);
+      })
+);
+
 export const dialogsSlice = createSlice({
   name: "dialogs",
   initialState,
@@ -60,6 +72,16 @@ export const dialogsSlice = createSlice({
       getDialogs.fulfilled,
       (state: DialogsState, action: PayloadAction<DialogData[]>) => {
         state.dialogs = action.payload;
+      }
+    );
+    builder.addCase(
+      deleteDialog.fulfilled,
+      (state, action: PayloadAction<number>) => {
+        const index = state.dialogs.findIndex(((dialog: DialogData) => dialog.id === action.payload));
+        if (index !== -1) {
+          state.dialogs.splice(index, 1);
+        }
+        state.selectedDialog = null;
       }
     );
   },

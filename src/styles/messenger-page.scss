@@ -11,12 +11,25 @@
     flex-shrink: 0;
     width: 290px;
     background: $bg-secondary;
-    border-right: 1px solid $border-color;
+
+    &:first-child {
+      border-right: 1px solid $border-color;
+    }
+
+    &:last-child {
+      border-left: 1px solid $border-color;
+    }
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
   }
 }
 
-@include mobile() {
-  .messenger-page__sidebar {
+@include compact() {
+  .messenger-page__sidebar:first-child {
     width: 100%;
   }
 }
@@ -62,8 +75,23 @@
   }
 }
 
-@include mobile() {
+@include compact() {
   .dialogs-list-item__text {
     max-width: 100%;
+  }
+}
+
+// User info
+
+.user-info {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 5px 15px;
+
+  &__name {
+    margin: 0 20px;
+    font-size: 16px;
+    font-weight: bold;
   }
 }
