@@ -16,9 +16,9 @@ const initialState: MessagesState = {
 export const getLastMessages = createAsyncThunk<Map<number, MessageData>, number[]>(
   "messages/getLastMessages",
   async (dialogs: number[], { fulfillWithValue }) => {
-    const lastMessages = new Map();
-
     const result = await new Promise<Map<number, MessageData>>((resolve) => {
+      const lastMessages = new Map();
+
       dialogs.forEach((dialogId: number, i: number) => {
         messagesServices
           .getMessages(dialogId, 1)
@@ -35,6 +35,14 @@ export const getLastMessages = createAsyncThunk<Map<number, MessageData>, number
 
     return fulfillWithValue(result);
   }
+);
+
+export const getMessages = createAsyncThunk<MessageData[], number>(
+  "messages/getMessages",
+  async (dialogId: number, { rejectWithValue }) =>
+    messagesServices
+      .getMessages(dialogId)
+      .catch((error: ResponseError) => rejectWithValue(error))
 );
 
 export const deleteDialogMessages = createAsyncThunk<number, number>(
@@ -55,6 +63,13 @@ export const messagesSlice = createSlice({
       getLastMessages.fulfilled,
       (state: MessagesState, action: PayloadAction<Map<number, MessageData>>) => {
         state.lastMessages = action.payload;
+      }
+    );
+    builder.addCase(
+      getMessages.fulfilled,
+      (state, action: PayloadAction<MessageData[]>) => {
+        const { dialogId } = action.payload[0] || {};
+        state.messages.set(dialogId, action.payload);
       }
     );
     builder.addCase(

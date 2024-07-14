@@ -22,6 +22,10 @@ const useDate = (date: Date | string) => {
       month: "2-digit",
       year: "numeric",
     }),
+    ddMonth: date.toLocaleDateString(i18n.resolvedLanguage, {
+      day: "2-digit",
+      month: "long",
+    }),
     isToday: isToday(date),
   };
 };

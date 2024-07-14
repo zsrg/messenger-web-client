@@ -1,3 +1,4 @@
+import attachmentsSlice from "./slices/attachments";
 import contactsReducer from "./slices/contacts";
 import dialogsReducer from "./slices/dialogs";
 import messagesReducer from "./slices/messages";
@@ -10,6 +11,7 @@ import { enableMapSet } from "immer";
 enableMapSet();
 
 const combinedReducer = combineReducers({
+  attachments: attachmentsSlice,
   contacts: contactsReducer,
   dialogs: dialogsReducer,
   messages: messagesReducer,

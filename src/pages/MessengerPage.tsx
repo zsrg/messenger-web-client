@@ -6,12 +6,13 @@ import DialogsHeader from "../components/messengerPage/DialogsHeader";
 import DialogsList from "../components/messengerPage/dialogsList/DialogsList";
 import If from "../components/common/utils/If";
 import MessagesHeader from "../components/messengerPage/MessagesHeader";
+import MessagesList from "../components/messengerPage/messagesList/MessagesList";
 import useToggle from "../hooks/useToggle";
 import { DialogData } from "../types/dialogs";
 import { FC, useEffect } from "react";
 import { getContacts } from "../redux/slices/contacts";
 import { getDialogs } from "../redux/slices/dialogs";
-import { getLastMessages } from "../redux/slices/messages";
+import { getLastMessages, getMessages } from "../redux/slices/messages";
 import { getUserData } from "../redux/slices/user";
 import { isNullish } from "../helpers/compare";
 import { RootState } from "../redux";
@@ -25,6 +26,7 @@ const MessengerPage: FC = () => {
   const [isDialogInfoOpen, toggleDialogInfo] = useToggle(true);
 
   const selectedDialog = useAppSelector((state: RootState) => state.dialogs.selectedDialog);
+  const messages = useAppSelector((state: RootState) => state.messages.messages);
 
   useEffect(() => {
     dispatch(getUserData())
@@ -32,6 +34,12 @@ const MessengerPage: FC = () => {
       .then(() => dispatch(getDialogs()))
       .then(({ payload }) => dispatch(getLastMessages((payload as DialogData[]).map((data) => data.id))));
   }, []);
+
+  useEffect(() => {
+    if (!isNullish(selectedDialog) && !messages.has(selectedDialog)) {
+      dispatch(getMessages(selectedDialog));
+    }
+  }, [selectedDialog]);
 
   return (
     <div className="messenger-page">
@@ -52,6 +60,7 @@ const MessengerPage: FC = () => {
                 isDialogInfoOpen={isDialogInfoOpen}
                 toggleDialogInfo={toggleDialogInfo}
               />
+              <MessagesList />
             </div>
 
             <If condition={isDialogInfoOpen}>
