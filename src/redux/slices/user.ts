@@ -128,6 +128,24 @@ export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
+    addSessionUpdate: (state: UserState, action: PayloadAction<SessionData>) => {
+      state.sessions.push(action.payload);
+    },
+    deleteSessionUpdate: (state: UserState, action: PayloadAction<string>) => {
+      const index = state.sessions.findIndex(((session: SessionData) => session.id === action.payload));
+      if (index !== -1) {
+        state.sessions.splice(index, 1);
+      }
+      if (action.payload === state.sessionId) {
+        state.sessionId = null;
+      }
+    },
+    changeLoginUpdate: (state: UserState, action: PayloadAction<string>) => {
+      state.login = action.payload;
+    },
+    changeNameUpdate: (state: UserState, action: PayloadAction<string>) => {
+      state.name = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(
@@ -177,5 +195,7 @@ export const userSlice = createSlice({
     );
   },
 });
+
+export const { addSessionUpdate, deleteSessionUpdate, changeLoginUpdate, changeNameUpdate } = userSlice.actions;
 
 export default userSlice.reducer;

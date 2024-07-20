@@ -22,6 +22,10 @@ export interface RequestParams {
   keepalive?: boolean;
 }
 
+export interface EventSourceRequestParams {
+  url: string;
+}
+
 export interface ResponseError {
   status: number;
   code?: string;
@@ -57,4 +61,15 @@ export const sendRequest = async ({ url, method, body, query, format, keepalive 
   const { code, text } = await response.json();
 
   return Promise.reject({ status, code, text });
+};
+
+export const createEventSource = ({ url }: EventSourceRequestParams) => {
+  const base = process.env.NODE_ENV === "development" ? process.env.PROXY : window.location.origin;
+  const objectUrl = new URL(url, base);
+
+  const init: EventSourceInit = {
+    withCredentials: true,
+  };
+
+  return new EventSource(objectUrl, init);
 };

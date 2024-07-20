@@ -10,7 +10,7 @@ import { faPaperclip, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { MessageData, SendMessageData } from "../../types/messages";
 import { RootState } from "../../redux";
-import { sendMessage, updateLastMessage } from "../../redux/slices/messages";
+import { sendMessage } from "../../redux/slices/messages";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { useTranslation } from "react-i18next";
 
@@ -74,7 +74,6 @@ const NewMessageForm: FC = () => {
       dispatch(sendMessage(sendMessageData))
         .then((data: CustomPayloadAction<MessageData>) => {
           if (data.meta?.requestStatus === "fulfilled") {
-            dispatch(updateLastMessage(data.payload));
             setMessageText("");
             setMessageImage(null);
           }

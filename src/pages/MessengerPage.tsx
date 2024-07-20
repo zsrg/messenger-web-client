@@ -10,6 +10,7 @@ import MessagesHeader from "../components/messengerPage/MessagesHeader";
 import MessagesList from "../components/messengerPage/messagesList/MessagesList";
 import NewMessageForm from "../components/messengerPage/NewMessageForm";
 import useToggle from "../hooks/useToggle";
+import { CustomPayloadAction } from "../types/common";
 import { deleteSession } from "../services/user";
 import { DialogData } from "../types/dialogs";
 import { FC, useEffect } from "react";
@@ -19,6 +20,7 @@ import { getLastMessages, getMessages } from "../redux/slices/messages";
 import { getSessions, getUserData } from "../redux/slices/user";
 import { isNullish } from "../helpers/compare";
 import { RootState } from "../redux";
+import { subscribe } from "../redux/listener";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { useTranslation } from "react-i18next";
 
@@ -37,7 +39,13 @@ const MessengerPage: FC = () => {
       .then(() => dispatch(getSessions()))
       .then(() => dispatch(getContacts()))
       .then(() => dispatch(getDialogs()))
-      .then(({ payload }) => dispatch(getLastMessages((payload as DialogData[]).map((data) => data.id))));
+      .then((action: CustomPayloadAction<DialogData>) => {
+        if (action.meta.requestStatus === "fulfilled") {
+          dispatch(getLastMessages(action.payload?.map((data: DialogData) => data.id)));
+        }
+      });
+
+    dispatch(subscribe());
 
     window.addEventListener("unload", handleUnload);
 

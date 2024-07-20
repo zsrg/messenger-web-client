@@ -66,8 +66,12 @@ export const messagesSlice = createSlice({
   name: "messages",
   initialState,
   reducers: {
-    updateLastMessage: (state: MessagesState, action: PayloadAction<MessageData>) => {
+    addMessageUpdate: (state: MessagesState, action: PayloadAction<MessageData>) => {
       const { dialogId } = action.payload;
+      if (state.messages.has(dialogId)) {
+        const messages = state.messages.get(dialogId);
+        state.messages.set(dialogId, [...messages, action.payload]);
+      }
       state.lastMessages.set(dialogId, action.payload);
     },
   },
@@ -81,6 +85,7 @@ export const messagesSlice = createSlice({
         } else {
           state.messages.get(dialogId).push(action.payload);
         }
+        state.lastMessages.set(dialogId, action.payload);
       }
     );
     builder.addCase(
@@ -105,6 +110,6 @@ export const messagesSlice = createSlice({
   },
 });
 
-export const { updateLastMessage } = messagesSlice.actions;
+export const { addMessageUpdate } = messagesSlice.actions;
 
 export default messagesSlice.reducer;

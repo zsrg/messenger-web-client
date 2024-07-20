@@ -59,6 +59,18 @@ export const dialogsSlice = createSlice({
     setFilter: (state: DialogsState, action: PayloadAction<string>) => {
       state.filter = action.payload;
     },
+    addDialogUpdate: (state: DialogsState, action: PayloadAction<DialogData>) => {
+      state.dialogs.push(action.payload);
+    },
+    deleteDialogUpdate: (state: DialogsState, action: PayloadAction<number>) => {
+      const index = state.dialogs.findIndex(((dialog: DialogData) => dialog.id === action.payload));
+      if (index !== -1) {
+        state.dialogs.splice(index, 1);
+      }
+      if (state.selectedDialog === action.payload) {
+        state.selectedDialog = null;
+      }
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(
@@ -87,6 +99,6 @@ export const dialogsSlice = createSlice({
   },
 });
 
-export const { selectDialog, setFilter } = dialogsSlice.actions;
+export const { selectDialog, setFilter, addDialogUpdate, deleteDialogUpdate } = dialogsSlice.actions;
 
 export default dialogsSlice.reducer;
