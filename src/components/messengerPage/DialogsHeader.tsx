@@ -5,14 +5,19 @@ import IconButton from "../common/inputs/IconButton";
 import TextInput from "../common/inputs/TextInput";
 import useToggle from "../../hooks/useToggle";
 import { ChangeEvent, FC } from "react";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { RootState } from "../../redux";
 import { setFilter } from "../../redux/slices/dialogs";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { useTranslation } from "react-i18next";
 
-const DialogsHeader: FC = () => {
+export interface DialogsHeaderProps {
+  isMenuOpen: boolean;
+  toggleMenu: () => void;
+}
+
+const DialogsHeader: FC<DialogsHeaderProps> = ({ isMenuOpen, toggleMenu }) => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
@@ -28,6 +33,13 @@ const DialogsHeader: FC = () => {
     <Header
       leftItems={
         <>
+          <IconButton
+            onClick={toggleMenu}
+            active={isMenuOpen}
+          >
+            <FontAwesomeIcon icon={faBars} />
+          </IconButton>
+
           <IconButton
             className="dont-show-on-compact"
             onClick={toggleContactsModal}

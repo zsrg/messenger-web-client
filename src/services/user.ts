@@ -1,4 +1,4 @@
-import { CreateSessionData } from "../types/user";
+import { ChangeLoginData, ChangeNameData, ChangePasswordData, CreateSessionData } from "../types/user";
 import { RequestMethod, sendRequest } from ".";
 
 export const createSession = async (createSessionData: CreateSessionData) =>
@@ -8,9 +8,14 @@ export const createSession = async (createSessionData: CreateSessionData) =>
     body: createSessionData,
   });
 
-export const deleteSession = async () =>
+export const getSessions = async () =>
   await sendRequest({
-    url: "/api/session",
+    url: "/api/sessions",
+  });
+
+export const deleteSession = async (session?: string) =>
+  await sendRequest({
+    url: `/api/session${session ? `/${session}` : ""}`,
     method: RequestMethod.DELETE,
     keepalive: true,
   });
@@ -18,4 +23,25 @@ export const deleteSession = async () =>
 export const getUserData = async () =>
   await sendRequest({
     url: "/api/user",
+  });
+
+export const changePassword = async (changePasswordData: ChangePasswordData) =>
+  await sendRequest({
+    url: "/api/settings/password",
+    method: RequestMethod.PUT,
+    body: changePasswordData,
+  });
+
+export const changeName = async (changeNameData: ChangeNameData) =>
+  await sendRequest({
+    url: "/api/settings/name",
+    method: RequestMethod.PUT,
+    body: changeNameData,
+  });
+
+export const changeLogin = async (changeNameData: ChangeLoginData) =>
+  await sendRequest({
+    url: "/api/settings/login",
+    method: RequestMethod.PUT,
+    body: changeNameData,
   });

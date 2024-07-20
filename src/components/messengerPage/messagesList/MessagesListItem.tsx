@@ -26,7 +26,7 @@ const MessageListItem: FC<MessageListItemProps> = ({
   const [image, setImage] = useState<string>(null);
   const [isImageLightboxOpen, toggleImageLightbox] = useToggle(false);
 
-  const { HHmm, ddMonth } = useDate(date);
+  const { HHmm, fullDate } = useDate(date);
 
   const dispatch = useAppDispatch();
 
@@ -75,7 +75,7 @@ const MessageListItem: FC<MessageListItemProps> = ({
           </If>
           <span
             className="messages-list-item__info"
-            title={`${ddMonth} ${HHmm}`}
+            title={fullDate}
           >
             {HHmm}
           </span>

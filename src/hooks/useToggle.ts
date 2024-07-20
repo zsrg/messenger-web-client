@@ -1,6 +1,8 @@
 import { useState } from "react";
 
-const useToggle = (initialState: boolean = false): [boolean, () => void] => {
+type ReturnedType = [boolean, () => void];
+
+const useToggle = (initialState: boolean = false): ReturnedType => {
   const [value, setValue] = useState<boolean>(initialState);
 
   const handleToggle = () => {

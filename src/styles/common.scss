@@ -225,7 +225,7 @@ body {
   }
 }
 
-// Buton
+// Button
 
 .button {
   outline: none;
@@ -335,6 +335,103 @@ body {
     position: absolute;
     right: 10px;
     font-size: 14px !important;
+  }
+}
+
+// Form item
+
+.form-item {
+  display: flex;
+  flex-direction: column;
+  padding: 5px 15px;
+
+  > * {
+    width: auto;
+    margin: 5px 10px;
+  }
+}
+
+// Toggle
+
+.toggle {
+  &-checkbox,
+  &-radio {
+    &__input {
+      display: none;
+
+      &:checked {
+        + .toggle-checkbox__element,
+        + .toggle-radio__element {
+          border: 2px solid $toggle-checked-color;
+        }
+      }
+
+      &:disabled {
+        + .toggle-checkbox__element,
+        + .toggle-radio__element {
+          opacity: 0.5;
+        }
+      }
+    }
+
+    &__element {
+      display: flex;
+      align-items: center;
+      height: 20px;
+      cursor: pointer;
+      border: 2px solid $toggle-color;
+    }
+  }
+
+  &-checkbox {
+    &__input {
+      &:checked {
+        + .toggle-checkbox__element {
+          justify-content: flex-end;
+          background: $toggle-checked-color;
+        }
+      }
+    }
+
+    &__element {
+      justify-content: flex-start;
+      width: 40px;
+      border-radius: 18px;
+
+      &:before {
+        content: "";
+        width: 18px;
+        height: 18px;
+        margin: 0 2px;
+        background: $toggle-color;
+        border-radius: 50%;
+      }
+    }
+  }
+
+  &-radio {
+    &__input {
+      &:checked {
+        + .toggle-radio__element:before {
+          display: block;
+        }
+      }
+    }
+
+    &__element {
+      justify-content: center;
+      width: 20px;
+      border-radius: 50%;
+
+      &:before {
+        content: "";
+        display: none;
+        width: 10px;
+        height: 10px;
+        background: $toggle-checked-color;
+        border-radius: 50%;
+      }
+    }
   }
 }
 

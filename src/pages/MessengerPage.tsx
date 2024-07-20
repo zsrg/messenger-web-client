@@ -5,16 +5,18 @@ import DialogInfoHeader from "../components/messengerPage/DialogInfoHeader";
 import DialogsHeader from "../components/messengerPage/DialogsHeader";
 import DialogsList from "../components/messengerPage/dialogsList/DialogsList";
 import If from "../components/common/utils/If";
+import MainMenu from "../components/messengerPage/MainMenu";
 import MessagesHeader from "../components/messengerPage/MessagesHeader";
 import MessagesList from "../components/messengerPage/messagesList/MessagesList";
 import NewMessageForm from "../components/messengerPage/NewMessageForm";
 import useToggle from "../hooks/useToggle";
+import { deleteSession } from "../services/user";
 import { DialogData } from "../types/dialogs";
 import { FC, useEffect } from "react";
 import { getContacts } from "../redux/slices/contacts";
 import { getDialogs } from "../redux/slices/dialogs";
 import { getLastMessages, getMessages } from "../redux/slices/messages";
-import { getUserData } from "../redux/slices/user";
+import { getSessions, getUserData } from "../redux/slices/user";
 import { isNullish } from "../helpers/compare";
 import { RootState } from "../redux";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
@@ -24,6 +26,7 @@ const MessengerPage: FC = () => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
+  const [isMenuOpen, toggleMenu] = useToggle(false);
   const [isDialogInfoOpen, toggleDialogInfo] = useToggle(true);
 
   const selectedDialog = useAppSelector((state: RootState) => state.dialogs.selectedDialog);
@@ -31,10 +34,21 @@ const MessengerPage: FC = () => {
 
   useEffect(() => {
     dispatch(getUserData())
+      .then(() => dispatch(getSessions()))
       .then(() => dispatch(getContacts()))
       .then(() => dispatch(getDialogs()))
       .then(({ payload }) => dispatch(getLastMessages((payload as DialogData[]).map((data) => data.id))));
+
+    window.addEventListener("unload", handleUnload);
+
+    return () => {
+      window.removeEventListener("unload", handleUnload);
+    };
   }, []);
+
+  const handleUnload = () => {
+    deleteSession();
+  };
 
   useEffect(() => {
     if (!isNullish(selectedDialog) && !messages.has(selectedDialog)) {
@@ -49,8 +63,15 @@ const MessengerPage: FC = () => {
           "dont-show-on-compact": !isNullish(selectedDialog),
         })}
       >
-        <DialogsHeader />
-        <DialogsList />
+        <DialogsHeader
+          isMenuOpen={isMenuOpen}
+          toggleMenu={toggleMenu}
+        />
+        <If
+          condition={isMenuOpen}
+          then={<MainMenu />}
+          else={<DialogsList />}
+        />
       </div>
       <If
         condition={!isNullish(selectedDialog)}

@@ -1,6 +1,8 @@
 import { useRef } from "react";
 
-const useDebounce = (cb: () => void, delay: number) => {
+type ReturnedType = () => void;
+
+const useDebounce = (cb: () => void, delay: number): ReturnedType => {
   const timerDebounceRef = useRef<NodeJS.Timeout>(null);
 
   return () => {

@@ -16,6 +16,9 @@
       "search": "Search",
       "createDialog": "Create new dialog"
     },
+    "mainMenu": {
+      "settings": "Settings"
+    },
     "dialogsList": {
       "file": "File"
     },
@@ -25,8 +28,7 @@
     },
     "dialogInfo": {
       "deleteDialog": "Delete dialog",
-      "confirmDeleteDialog": "Are you sure you want to delete the dialog?",
-      "delete": "Delete"
+      "confirmDeleteDialog": "Are you sure you want to delete the dialog?"
     },
     "messagesHeader": {
       "dialogInfo": "Dialog info",
@@ -38,6 +40,11 @@
       "enterDescription": "Enter - for send message\nCtrl + Enter - for new line"
     },
     "modals": {
+      "confirmModal": {
+        "title": "Confirm",
+        "cancel": "Cancel",
+        "yes": "Yes"
+      },
       "contactsModal": {
         "title": "Contacts"
       },
@@ -48,11 +55,74 @@
         "title": "Send image",
         "cancel": "Cancel",
         "send": "Send"
+      },
+      "settings": {
+        "settings": "Settings",
+        "editProfile": "Edit profile",
+        "security": "Security",
+        "language": "Language",
+        "appearance": "Appearance",
+        "info": "Info",
+        "logOut": "Log out",
+        "confirmLogOut": "Are you sure you want to log out?",
+        "appearancePage": {
+          "darkMode": "Dark mode"
+        },
+        "editProfilePage": {
+          "changeName": "Change name",
+          "changeLogin": "Change login"
+        },
+        "infoPage": {
+          "version": "Version: {{version}}"
+        },
+        "languagePage": {
+          "en": "English"
+        },
+        "securityPage": {
+          "changePassword": "Change password",
+          "activeSessions": "Active sessions"
+        }
+      },
+      "changeLoginModal": {
+        "title": "Change login",
+        "login": "Login",
+        "cancel": "Cancel",
+        "save": "Save"
+      },
+      "changeNameModal": {
+        "title": "Change login",
+        "name": "Name",
+        "cancel": "Cancel",
+        "save": "Save"
+      },
+      "changePasswordModal": {
+        "title": "Change password",
+        "currentPassword": "Current password",
+        "newPassword": "New password",
+        "confirmPassword": "Confirm password",
+        "cancel": "Cancel",
+        "save": "Save"
+      },
+      "sessionsModal": {
+        "title": "Active sessions",
+        "deleteSession": "Delete session",
+        "confirmDeleteSession": "Are you sure you want to delete session?"
       }
     },
     "messages": {
       "createDialogError": "Create dialog error",
-      "deleteDialogError": "Delete dialog error"
+      "deleteDialogError": "Delete dialog error",
+      "passwordUpdatedSuccesfull": "Password updated succesfull",
+      "newPasswordsDoNotMatch": "New passwords don't match",
+      "oldAndNewPasswordSame": "Old and new passwords are the same",
+      "invalidPassword": "Invalid password",
+      "changePasswordError": "Change password error",
+      "nameUpdatedSuccesfull": "Name updated succesfull",
+      "changeNameError": "Change name error",
+      "loginUpdatedSuccesfull": "Login updated succesfull",
+      "oldAndNewLoginSame": "Old and new login are the same",
+      "loginAlreadyExists": "Login already exists",
+      "changeLoginError": "Change login error"
     }
   }
 }

@@ -158,10 +158,23 @@
   align-items: center;
   padding: 5px 15px;
 
-  &__name {
-    margin: 0 20px;
-    font-size: 16px;
-    font-weight: bold;
+  &__info {
+    display: flex;
+    flex-direction: column;
+
+    span {
+      margin: 2px 20px;
+
+      &:first-child {
+        font-size: 24px;
+        font-weight: bold;
+        color: $text-primary;
+      }
+
+      &:last-child {
+        font-size: 14px;
+      }
+    }
   }
 }
 

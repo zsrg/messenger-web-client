@@ -2,7 +2,7 @@ import { FC } from "react";
 
 export interface IfProps {
   condition: any;
-  children?: JSX.Element;
+  children?: JSX.Element | JSX.Element[];
   then?: JSX.Element;
   else?: JSX.Element;
 }

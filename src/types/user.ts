@@ -15,3 +15,17 @@ export interface UserData {
   login: string;
   name: string;
 }
+
+export interface ChangePasswordData {
+  currentPassword: string;
+  newPassword: string;
+  confirmPassword?: string;
+}
+
+export interface ChangeNameData {
+  newName: string;
+}
+
+export interface ChangeLoginData {
+  newLogin: string;
+}
