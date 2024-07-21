@@ -1,5 +1,9 @@
 # messenger-web-client
 
+![full](./docs/screenshots/full.png)
+
+![mobile](./docs/screenshots/mobile.png)
+
 ## Available scripts
 
 In the project directory, you can run:
@@ -26,6 +30,7 @@ server {
 
   location /api {
     proxy_pass http://localhost:4000/api;
+    proxy_buffering off;
   }
 }
 ```
