@@ -7,6 +7,7 @@
     },
     "messages": {
       "invalidLoginOrPassword": "Invalid login or password",
+      "activeSessionExistsInBrowser": "An active session already exists in this browser",
       "createSessionError": "Create session error"
     }
   },

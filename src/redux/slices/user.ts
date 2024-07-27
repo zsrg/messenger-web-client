@@ -30,6 +30,8 @@ export const createSession = createAsyncThunk<SessionData, CreateSessionData>(
       .catch((e: ResponseError) => {
         if (e?.code === "INVALID_LOGIN_OR_PASSWORD") {
           dispatch(addNotification({ type: NotificationType.Error, text: t("loginPage.messages.invalidLoginOrPassword") }));
+        } else if (e?.code === "ACTIVE_SESSION_EXISTS_IN_BROWSER") {
+          dispatch(addNotification({ type: NotificationType.Error, text: t("loginPage.messages.activeSessionExistsInBrowser") }));
         } else {
           dispatch(addNotification({ type: NotificationType.Error, text: t("loginPage.messages.createSessionError") }));
         }
