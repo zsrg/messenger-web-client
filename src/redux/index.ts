@@ -1,6 +1,7 @@
 import attachmentsSlice from "./slices/attachments";
 import contactsReducer from "./slices/contacts";
 import dialogsReducer from "./slices/dialogs";
+import listenerReducer from "./listener";
 import messagesReducer from "./slices/messages";
 import notificationsReducer from "./slices/notifications";
 import settingsReducer from "./slices/settings";
@@ -14,6 +15,7 @@ const combinedReducer = combineReducers({
   attachments: attachmentsSlice,
   contacts: contactsReducer,
   dialogs: dialogsReducer,
+  listener: listenerReducer,
   messages: messagesReducer,
   notifications: notificationsReducer,
   settings: settingsReducer,
@@ -21,7 +23,7 @@ const combinedReducer = combineReducers({
 });
 
 const rootReducer = (state, action) => {
-  if (action.payload?.status === 401) {
+  if (action.type === "user/deleteSession/fulfilled" || action.payload?.status === 401) {
     state = undefined;
   }
   return combinedReducer(state, action);
