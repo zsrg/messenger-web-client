@@ -60,7 +60,7 @@ const MessengerPage: FC = () => {
 
   useEffect(() => {
     if (!isNullish(selectedDialog) && !messages.has(selectedDialog)) {
-      dispatch(getMessages(selectedDialog));
+      dispatch(getMessages({ dialogId: selectedDialog, sinceId: -1 }));
     }
   }, [selectedDialog]);
 

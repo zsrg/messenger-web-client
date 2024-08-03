@@ -3,7 +3,7 @@ import If from "../../common/utils/If";
 import ImageLightbox from "../modals/ImageLightbox";
 import useDate from "../../../hooks/useDate";
 import useToggle from "../../../hooks/useToggle";
-import { FC, useEffect, useState } from "react";
+import { FC, memo, useEffect, useState } from "react";
 import { getAttachment } from "../../../redux/slices/attachments";
 import { RootState } from "../../../redux";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
@@ -16,7 +16,7 @@ export interface MessageListItemProps {
   onAttachmentLoad: () => void;
 }
 
-const MessageListItem: FC<MessageListItemProps> = ({
+const MessageListItem: FC<MessageListItemProps> = memo(({
   text,
   attachmentId,
   date,
@@ -49,7 +49,9 @@ const MessageListItem: FC<MessageListItemProps> = ({
   }, [attachments]);
 
   useEffect(() => {
-    onAttachmentLoad();
+    if (image) {
+      onAttachmentLoad();
+    }
   }, [image]);
 
   return (
@@ -89,6 +91,6 @@ const MessageListItem: FC<MessageListItemProps> = ({
       />
     </>
   );
-};
+});
 
 export default MessageListItem;

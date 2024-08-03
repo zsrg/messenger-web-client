@@ -8,14 +8,10 @@ export const sendMessage = async (sendMessageData: SendMessageData) =>
     body: sendMessageData,
   });
 
-export const getMessages = async (
-  dialogId: number,
-  limit: number = 1000,
-  offset: number = 0
-) =>
+export const getMessages = async (dialogId: number, sinceId: number, limit: number) =>
   await sendRequest({
     url: `/api/messages/dialog/${dialogId}`,
-    query: { limit, offset },
+    query: { sinceId, limit },
   });
 
 export const deleteDialogMessages = async (dialogId: number) =>

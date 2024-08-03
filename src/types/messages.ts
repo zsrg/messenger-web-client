@@ -12,3 +12,17 @@ export interface MessageData {
   text: string;
   attachmentId: number;
 }
+
+export interface MessageInfoData {
+  isAllLoaded: boolean;
+}
+
+export interface GetMessagesParams {
+  dialogId: number;
+  sinceId: number;
+}
+
+export interface GetMessagesData {
+  dialogId: number;
+  data: MessageData[];
+}

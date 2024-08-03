@@ -1,16 +1,19 @@
 import * as messagesServices from "../../services/messages";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { MessageData, SendMessageData } from "../../types/messages";
+import { GetMessagesData, GetMessagesParams, MessageData, MessageInfoData, SendMessageData } from "../../types/messages";
+import { MESSAGES_UPLOAD_LIMIT } from "../../constants";
 import { ResponseError } from "../../services";
 
 export interface MessagesState {
   lastMessages: Map<number, MessageData>;
   messages: Map<number, MessageData[]>;
+  messagesInfo: Map<number, MessageInfoData>;
 }
 
 const initialState: MessagesState = {
   lastMessages: new Map(),
   messages: new Map(),
+  messagesInfo: new Map(),
 };
 
 export const sendMessage = createAsyncThunk<MessageData, SendMessageData>(
@@ -24,32 +27,35 @@ export const sendMessage = createAsyncThunk<MessageData, SendMessageData>(
 export const getLastMessages = createAsyncThunk<Map<number, MessageData>, number[]>(
   "messages/getLastMessages",
   async (dialogs: number[], { fulfillWithValue }) => {
-    const result = await new Promise<Map<number, MessageData>>((resolve) => {
-      const lastMessages = new Map();
+    const result = await new Promise<Map<number, MessageData>>(
+      async (resolve) => {
+        const lastMessages = new Map();
 
-      dialogs.forEach((dialogId: number, i: number) => {
-        messagesServices
-          .getMessages(dialogId, 1)
-          .then((data: MessageData[]) => {
-            lastMessages.set(dialogId, data[0]);
-          })
-          .finally(() => {
-            if (i === dialogs.length - 1) {
-              resolve(lastMessages);
-            }
-          });
-      });
-    });
+        for (let i = 0; i < dialogs.length; i++) {
+          await messagesServices
+            .getMessages(dialogs[i], -1, 1)
+            .then((data: MessageData[]) => {
+              lastMessages.set(dialogs[i], data[0]);
+            })
+            .finally(() => {
+              if (i === dialogs.length - 1) {
+                resolve(lastMessages);
+              }
+            });
+        }
+      }
+    );
 
     return fulfillWithValue(result);
   }
 );
 
-export const getMessages = createAsyncThunk<MessageData[], number>(
+export const getMessages = createAsyncThunk<GetMessagesData, GetMessagesParams>(
   "messages/getMessages",
-  async (dialogId: number, { rejectWithValue }) =>
+  async ({ dialogId, sinceId }, { fulfillWithValue, rejectWithValue }) =>
     messagesServices
-      .getMessages(dialogId)
+      .getMessages(dialogId, sinceId, MESSAGES_UPLOAD_LIMIT)
+      .then((data: MessageData[]) => fulfillWithValue({ dialogId, data }))
       .catch((error: ResponseError) => rejectWithValue(error))
 );
 
@@ -96,9 +102,18 @@ export const messagesSlice = createSlice({
     );
     builder.addCase(
       getMessages.fulfilled,
-      (state, action: PayloadAction<MessageData[]>) => {
-        const { dialogId } = action.payload[0] || {};
-        state.messages.set(dialogId, action.payload);
+      (state, action: PayloadAction<GetMessagesData>) => {
+        const { dialogId, data } = action.payload || {};
+
+        if (data.length) {
+          if (state.messages.has(dialogId)) {
+            state.messages.get(dialogId).unshift(...(data || []));
+          } else {
+            state.messages.set(dialogId, data);
+          }
+        } else {
+          state.messagesInfo.set(dialogId, { isAllLoaded: true });
+        }
       }
     );
     builder.addCase(

@@ -1,1 +1,2 @@
 export const SHOW_NOTIFICATION_TIME = 5000;
+export const MESSAGES_UPLOAD_LIMIT = 50;

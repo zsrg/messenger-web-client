@@ -1,6 +1,7 @@
 import FileInput from "../common/inputs/FileInput";
 import IconButton from "../common/inputs/IconButton";
 import SendImageModal from "./modals/SendImageModal";
+import useDebounce from "../../hooks/useDebounce";
 import useToggle from "../../hooks/useToggle";
 import { ChangeEvent, FC, KeyboardEvent, useEffect, useRef, useState } from "react";
 import { createAttachment } from "../../services/attachments";
@@ -28,6 +29,14 @@ const NewMessageForm: FC = () => {
   const [isSendImageModalOpen, toggleSendImageModal] = useToggle(false);
 
   const { t } = useTranslation();
+
+  const scrollList = useDebounce(() => {
+    const list = document.getElementsByClassName("messages-list")[0];
+
+    if (list) {
+      list.scrollTop = list.scrollHeight;
+    }
+  }, 100);
 
   useEffect(() => {
     setMessageText("");
@@ -76,6 +85,7 @@ const NewMessageForm: FC = () => {
           if (data.meta?.requestStatus === "fulfilled") {
             setMessageText("");
             setMessageImage(null);
+            scrollList();
           }
         });
     }
